@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Controle de Estoque</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+      background: url('https://images.unsplash.com/photo-1600891964599-f61ba0e24092?auto=format&fit=crop&w=1920&q=80') no-repeat center center fixed;
+      background-size: cover;
+      color: #333;
+    }
+
+    .logo-container {
+      text-align: center;
+      margin-bottom: 15px;
+    }
+
+    .logo {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #fff8dc;
+      text-shadow: 2px 2px 4px #000;
+    }
+
+    .tabs {
+      text-align: center;
+      margin-bottom: 15px;
+    }
+
+    .tab-button {
+      padding: 10px 15px;
+      margin-right: 5px;
+      cursor: pointer;
+      background-color: #a0522d;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      font-weight: bold;
+    }
+
+    .tab-button:hover {
+      background-color: #8b4513;
+    }
+
+    .tab-content {
+      display: none;
+      background-color: rgba(255, 248, 240, 0.9);
+      padding: 10px;
+      border-radius: 8px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    #faltas {
+      margin-top: 15px;
+      background-color: rgba(255, 248, 240, 0.9);
+      padding: 10px;
+      border-radius: 8px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+      text-align: center;
+    }
+
+    #listaFaltas {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: inline-block;
+      text-align: left;
+    }
+
+    .faltando {
+      color: #b22222;
+      font-weight: bold;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .remover {
+      cursor: pointer;
+      color: #b22222;
+      border: none;
+      background: none;
+      font-size: 18px;
+      margin-left: 10px;
+    }
+
+    .remover:hover {
+      color: #ff0000;
+    }
+
+    button {
+      margin-top: 10px;
+      padding: 6px 12px;
+      background-color: #8b5e3c;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #6b3e26;
+    }
+
+    .add-form {
+      margin-top: 10px;
+      text-align: center;
+    }
+
+    .add-form input {
+      padding: 5px;
+      margin-right: 5px;
+    }
+  </style>
+</head>
+<body>
+  <!-- Logo -->
+  <div class="logo-container">
+    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTYmQAzUIAK9g6Ey1ZRpVFSS9pB76sB33NEzg&s" alt="Logo Ilha dos Açores Restaurante" class="logo">
+  </div>
+
+  <h1>Controle de Estoque</h1>
+
+  <div class="tabs">
+    <button class="tab-button" onclick="abrirAba('pizzaria')">Pizzaria</button>
+    <button class="tab-button" onclick="abrirAba('cozinha')">Cozinha</button>
+    <button class="tab-button" onclick="abrirAba('bebidas')">Bebidas</button>
+  </div>
+
+ <!-- Aba Pizzaria -->
+  <div id="pizzaria" class="tab-content active">
+    <h2>Lista de Produtos - Pizzaria</h2>
+    <ul id="produtosPizzaria">
+      <li>Mussarela <button onclick="marcarFalta('Mussarela')">Em falta</button></li>
+    <li>Gorgonzola <button onclick="marcarFalta('Gorgonzola')">Em falta</button></li>
+    <li>Parmesão <button onclick="marcarFalta('Parmesão')">Em falta</button></li>
+    <li>Provolone <button onclick="marcarFalta('Provolone')">Em falta</button></li>
+    <li>Requeijão <button onclick="marcarFalta('Requeijão')">Em falta</button></li>
+    <li>Catupiry <button onclick="marcarFalta('Catupiry')">Em falta</button></li>
+    <li>Cream Cheese <button onclick="marcarFalta('Cream Cheese')">Em falta</button></li>
+    <li>Cheddar <button onclick="marcarFalta('Cheddar')">Em falta</button></li>
+    <li>Chocolate Preto Bisnaga <button onclick="marcarFalta('Chocolate Preto Bisnaga')">Em falta</button></li>
+    <li>Chocolate Branco Bisnaga <button onclick="marcarFalta('Chocolate Branco Bisnaga')">Em falta</button></li>
+    <li>Doce de Leite <button onclick="marcarFalta('Doce de Leite')">Em falta</button></li>
+    <li>Goiabada <button onclick="marcarFalta('Goiabada')">Em falta</button></li>
+    <li>Farinha de Trigo <button onclick="marcarFalta('Farinha de Trigo')">Em falta</button></li>
+    <li>Farinha de Trigo Integral <button onclick="marcarFalta('Farinha de Trigo Integral')">Em falta</button></li>
+    <li>Fermento Biológico Seco <button onclick="marcarFalta('Fermento Biológico Seco')">Em falta</button></li>
+    <li>Azeite <button onclick="marcarFalta('Azeite')">Em falta</button></li>
+    <li>Mel <button onclick="marcarFalta('Mel')">Em falta</button></li>
+    <li>Sal <button onclick="marcarFalta('Sal')">Em falta</button></li>
+    <li>Açúcar <button onclick="marcarFalta('Açúcar')">Em falta</button></li>
+    <li>Calabresa <button onclick="marcarFalta('Calabresa')">Em falta</button></li>
+    <li>Presunto <button onclick="marcarFalta('Presunto')">Em falta</button></li>
+    <li>Lombo Canadense <button onclick="marcarFalta('Lombo Canadense')">Em falta</button></li>
+    <li>Peito de Peru <button onclick="marcarFalta('Peito de Peru')">Em falta</button></li>
+    <li>Linguiça Blumenau <button onclick="marcarFalta('Linguiça Blumenau')">Em falta</button></li>
+    <li>Batata palha <button onclick="marcarFalta('Batata palha')">Em falta</button></li>
+    <li>Champignon <button onclick="marcarFalta('Champignon')">Em falta</button></li>
+    <li>Palmito <button onclick="marcarFalta('Palmito')">Em falta</button></li>
+    <li>Tomate seco <button onclick="marcarFalta('Tomate seco')">Em falta</button></li>
+    <li>Alho frito <button onclick="marcarFalta('Alho frito')">Em falta</button></li>
+    <li>Pimenta biquinho <button onclick="marcarFalta('Pimenta biquinho')">Em falta</button></li>
+    <li>Pimenta calabresa <button onclick="marcarFalta('Pimenta calabresa')">Em falta</button></li>
+    <li>Peperoni <button onclick="marcarFalta('Peperoni')">Em falta</button></li>
+    <li>Azeitona <button onclick="marcarFalta('Azeitona')">Em falta</button></li>
+    <li>Barbecue <button onclick="marcarFalta('Barbecue')">Em falta</button></li>
+    <li>Chocolate Preto Barra <button onclick="marcarFalta('Chocolate Preto Barra')">Em falta</button></li>
+    <li>Chocolate Branco Barra <button onclick="marcarFalta('Chocolate Branco Barra')">Em falta</button></li>
+    <li>Oreo <button onclick="marcarFalta('Oreo')">Em falta</button></li>
+    <li>Confete <button onclick="marcarFalta('Confete')">Em falta</button></li>
+    <li>Ouro Branco <button onclick="marcarFalta('Ouro Branco')">Em falta</button></li>
+    <li>Abacaxi <button onclick="marcarFalta('Abacaxi')">Em falta</button></li>
+    <li>Pessego <button onclick="marcarFalta('Pessego')">Em falta</button></li>
+    <li>Figo <button onclick="marcarFalta('Figo')">Em falta</button></li>
+    <li>Paçoca <button onclick="marcarFalta('Paçoca')">Em falta</button></li>
+    <li>Canela <button onclick="marcarFalta('Canela')">Em falta</button></li>
+    <li>Polenta <button onclick="marcarFalta('Polenta')">Em falta</button></li>
+    <li>Batata Frita <button onclick="marcarFalta('Batata Frita')">Em falta</button></li>
+    <li>Aipim <button onclick="marcarFalta('Aipim')">Em falta</button></li>
+    <li>Onion Rings (Cebola) <button onclick="marcarFalta('Onion Rings (Cebola)')">Em falta</button></li>
+    <li>Coração <button onclick="marcarFalta('Coração')">Em falta</button></li>
+    <li>Carne Seca <button onclick="marcarFalta('Carne Seca')">Em falta</button></li>
+    <li>
+        Caixa mini broto 
+        <input type="number" id="qtdMiniBroto" placeholder="Qtd" min="0">
+        <button onclick="marcarFalta('Caixa mini broto - ' + document.getElementById('qtdMiniBroto').value + ' unidades')">Em falta</button>
+      </li>
+      <li>
+        Caixa broto 
+        <input type="number" id="qtdBroto" placeholder="Qtd" min="0">
+        <button onclick="marcarFalta('Caixa broto - ' + document.getElementById('qtdBroto').value + ' unidades')">Em falta</button>
+      </li>
+      <li>
+        Caixa grande 
+        <input type="number" id="qtdGrande" placeholder="Qtd" min="0">
+        <button onclick="marcarFalta('Caixa grande - ' + document.getElementById('qtdGrande').value + ' unidades')">Em falta</button>
+      </li>
+      <li>
+        Caixa gigante 
+        <input type="number" id="qtdGigante" placeholder="Qtd" min="0">
+        <button onclick="marcarFalta('Caixa gigante - ' + document.getElementById('qtdGigante').value + ' unidades')">Em falta</button>
+      </li>
+      <li>
+        Caixa família 
+        <input type="number" id="qtdFamilia" placeholder="Qtd" min="0">
+        <button onclick="marcarFalta('Caixa família - ' + document.getElementById('qtdFamilia').value + ' unidades')">Em falta</button>
+      </li>
+    </ul>
+   <div class="add-form">
+      <input type="text" id="novoPizzaria" placeholder="Novo produto">
+      <button onclick="adicionarProduto('Pizzaria')">Adicionar</button>
+    </div>
+</div>
+    
+  
+      <!-- Aba Cozinha -->
+<div id="cozinha" class="tab-content">
+  <h2>Lista de Produtos - Cozinha</h2>
+
+  <h3>Temperos/oleo</h3>
+  <ul id="produtosCozinha">
+    <li>Alho em pasta <button onclick="marcarFalta('Alho em pasta')">Em falta</button></li>
+    <li>Sal <button onclick="marcarFalta('Sal')">Em falta</button></li>
+    <li>Açúcar <button onclick="marcarFalta('Açúcar')">Em falta</button></li>
+      <li>Sal grosso <button onclick="marcarFalta('Sal grosso')">Em falta</button></li>
+    <li>Mostarda <button onclick="marcarFalta('Mostarda')">Em falta</button></li>
+    <li>Fermento químico <button onclick="marcarFalta('Fermento químico')">Em falta</button></li>
+    <li>Bechamel <button onclick="marcarFalta('Bechamel')">Em falta</button></li>
+    <li>Caldo de galinha <button onclick="marcarFalta('Caldo de galinha')">Em falta</button></li>
+    <li>Creme de cebola <button onclick="marcarFalta('Creme de cebola')">Em falta</button></li>
+    <li>Amaciante de carne <button onclick="marcarFalta('Amaciante de carne')">Em falta</button></li>
+    <li>Tempero para aves <button onclick="marcarFalta('Tempero para aves')">Em falta</button></li>
+    <li>Caldo de frutos do mar <button onclick="marcarFalta('Caldo de frutos do mar')">Em falta</button></li>
+    <li>Ajinomoto <button onclick="marcarFalta('Ajinomoto')">Em falta</button></li>
+    <li>Vinagre <button onclick="marcarFalta('Vinagre')">Em falta</button></li>
+    <li>Óleo de soja <button onclick="marcarFalta('Óleo de soja')">Em falta</button></li>
+    <li>Óleo de algodão<button onclick="marcarFalta('Óleo de algodão')">Em falta</button></li>
+  </ul>
+
+  <h3>Grãos / Farinhas / Conservas</h3>
+  <ul>
+    <li>Feijão carioca <button onclick="marcarFalta('Feijão carioca')">Em falta</button></li>
+    <li>Feijão <button onclick="marcarFalta('Feijão')">Em falta</button></li>
+    <li>Farinha de rosca <button onclick="marcarFalta('Farinha de rosca')">Em falta</button></li>
+    <li>Farofa temperada <button onclick="marcarFalta('Farofa temperada')">Em falta</button></li>
+    <li>Farinha Panko <button onclick="marcarFalta('Farinha Panko')">Em falta</button></li>
+    <li>Macarrão <button onclick="marcarFalta('Macarrão')">Em falta</button></li>
+    <li>Grão de bico <button onclick="marcarFalta('Grão de bico')">Em falta</button></li>
+    <li>Arroz integral <button onclick="marcarFalta('Arroz integral')">Em falta</button></li>
+    <li>Arroz parboilizado <button onclick="marcarFalta('Arroz parboilizado')">Em falta</button></li>
+    <li>Picles pepino <button onclick="marcarFalta('Picles pepino')">Em falta</button></li>
+    <li>Ovo codorna <button onclick="marcarFalta('Ovo codorna')">Em falta</button></li>
+    <li>Alho em pasta <button onclick="marcarFalta('Alho em pasta')">Em falta</button></li>
+    <li>Molho de pimenta <button onclick="marcarFalta('Molho de pimenta')">Em falta</button></li>
+    <li>Molho tabasco <button onclick="marcarFalta('Molho tabasco')">Em falta</button></li>
+    <li>Shoyo <button onclick="marcarFalta('Shoyo')">Em falta</button></li>
+    <li>Ovo <button onclick="marcarFalta('Ovo')">Em falta</button></li>
+    <li>Rolo Massa para pastel/lasanha <button onclick="marcarFalta('Rolo Massa para pastel/lasanha')">Em falta</button></li>
+  </ul>
+
+  <h3>Congelados</h3>
+  <ul>
+    <li>Linguiça toscana <button onclick="marcarFalta('Linguiça toscana')">Em falta</button></li>
+    <li>Bolinho de siri <button onclick="marcarFalta('Bolinho de siri')">Em falta</button></li>
+    <li>Bolinho de camarão <button onclick="marcarFalta('Bolinho de camarão')">Em falta</button></li>
+    <li>Sobrecoxa <button onclick="marcarFalta('Sobrecoxa')">Em falta</button></li>
+    <li>Salsicha <button onclick="marcarFalta('Salsicha')">Em falta</button></li>
+    <li>Pernil <button onclick="marcarFalta('Pernil')">Em falta</button></li>
+    <li>Fígado <button onclick="marcarFalta('Fígado')">Em falta</button></li>
+    <li>Mondongo/tripa <button onclick="marcarFalta('Mondongo/tripa')">Em falta</button></li>
+    <li>Sassami <button onclick="marcarFalta('Sassami')">Em falta</button></li>
+    <li>Filé de peito de frango <button onclick="marcarFalta('Filé de peito de frango')">Em falta</button></li>
+    <li>Camarão <button onclick="marcarFalta('Camarão')">Em falta</button></li>
+    <li>Peixe <button onclick="marcarFalta('Peixe')">Em falta</button></li>
+      <li>Patinho <button onclick="marcarFalta('Patinho')">Em falta</button></li>
+      
+  </ul>
+
+  <h3>Vegetais</h3>
+  <ul>
+    <li>Abóbora <button onclick="marcarFalta('Abóbora')">Em falta</button></li>
+    <li>Rúcula <button onclick="marcarFalta('Rúcula')">Em falta</button></li>
+    <li>Batata doce <button onclick="marcarFalta('Batata doce')">Em falta</button></li>
+    <li>Batata <button onclick="marcarFalta('Batata')">Em falta</button></li>
+    <li>Acelga <button onclick="marcarFalta('Acelga')">Em falta</button></li>
+    <li>Alface <button onclick="marcarFalta('Alface')">Em falta</button></li>
+    <li>Repolho <button onclick="marcarFalta('Repolho')">Em falta</button></li>
+    <li>Cenoura <button onclick="marcarFalta('Cenoura')">Em falta</button></li>
+    <li>Beterraba <button onclick="marcarFalta('Beterraba')">Em falta</button></li>
+    <li>Pepino <button onclick="marcarFalta('Pepino')">Em falta</button></li>
+    <li>Pimentão <button onclick="marcarFalta('Pimentão')">Em falta</button></li>
+    <li>Cebola <button onclick="marcarFalta('Cebola')">Em falta</button></li>
+    <li>Chuchu <button onclick="marcarFalta('Chuchu')">Em falta</button></li>
+  </ul>
+
+  <h3>Frutas</h3>
+  <ul>
+    <li>Morango <button onclick="marcarFalta('Morango')">Em falta</button></li>
+    <li>Banana <button onclick="marcarFalta('Banana')">Em falta</button></li>
+    <li>Limão <button onclick="marcarFalta('Limão')">Em falta</button></li>
+    <li>Mamão <button onclick="marcarFalta('Mamão')">Em falta</button></li>
+    <li>Manga <button onclick="marcarFalta('Manga')">Em falta</button></li>
+    <li>Tomate cereja/grape <button onclick="marcarFalta('Tomate cereja/grape')">Em falta</button></li>
+    <li>Uva passa <button onclick="marcarFalta('Uva passa')">Em falta</button></li>
+    <li>Laranja <button onclick="marcarFalta('Laranja')">Em falta</button></li>
+    <li>Maçã <button onclick="marcarFalta('Maçã')">Em falta</button></li>
+    <li>Melão <button onclick="marcarFalta('Melão')">Em falta</button></li>
+    <li>Melancia <button onclick="marcarFalta('Melancia')">Em falta</button></li>
+  </ul>
+  <h3>Embalagem</h3>
+  <ul>
+    <li>Marmita isopor pequena <button onclick="marcarFalta('Marmita isopor pequena')">Em falta</button></li>
+    <li>Marmita isopor grande <button onclick="marcarFalta('Marmita isopor grande')">Em falta</button></li>
+    <li>Marmita plástico salada <button onclick="marcarFalta('Marmita plástico salada')">Em falta</button></li>
+    <li>Marmita plástico pequena <button onclick="marcarFalta('Marmita plástico pequena')">Em falta</button></li>
+    <li>Marmita plástico grande <button onclick="marcarFalta('Marmita plástico grande')">Em falta</button></li>
+  </ul>
+  <h3>Limpeza</h3>
+  <ul>
+    <li>Álcool <button onclick="marcarFalta('Álcool')">Em falta</button></li>
+    <li>Álcool em gel <button onclick="marcarFalta('Álcool em gel')">Em falta</button></li>
+    <li>Detergente <button onclick="marcarFalta('Detergente')">Em falta</button></li>
+    <li>Desengordurante <button onclick="marcarFalta('Desengordurante')">Em falta</button></li>
+    <li>Água sanitaria <button onclick="marcarFalta('Água sanitaria')">Em falta</button></li>
+    <li>Desinfetante <button onclick="marcarFalta('Desinfetante')">Em falta</button></li>
+    <li>Esponja <button onclick="marcarFalta('Esponja')">Em falta</button></li>
+    <li>Esponja de aço <button onclick="marcarFalta('Esponja de aço')">Em falta</button></li>
+    </ul>
+   <div class="add-form">
+      <input type="text" id="novoCozinha" placeholder="Novo produto">
+      <button onclick="adicionarProduto('Cozinha')">Adicionar</button>
+    </div>
+  </div>
+  <div id="faltas">
+    <h2>Produtos em falta</h2>
+    <ul id="listaFaltas"></ul>
+    <button onclick="enviarWhatsApp()">Enviar WhatsApp</button>
+    <button onclick="enviarEmail()">Enviar Email</button>
+  </div>
+
+<!-- Aba Bebidas -->
+<div id="bebidas" class="tab-content">
+  <h2>Lista de Produtos - Bebidas</h2>
+  <h3>Polpas</h3>
+  <ul id="produtosBebidas">
+    <li>Morango <button onclick="marcarFalta('Morango')">Em falta</button></li>
+    <li>Maracujá <button onclick="marcarFalta('Maracujá')">Em falta</button></li>
+    <li>Uva <button onclick="marcarFalta('Uva')">Em falta</button></li>
+    <li>Abacaxi <button onclick="marcarFalta('Abacaxi')">Em falta</button></li>
+    <li>Abacaxi com hortelã <button onclick="marcarFalta('Abacaxi com hortelã')">Em falta</button></li>
+    <li>Manga <button onclick="marcarFalta('Manga')">Em falta</button></li>
+    <li>Acerola <button onclick="marcarFalta('Acerola')">Em falta</button></li>
+    <li>Caju <button onclick="marcarFalta('Caju')">Em falta</button></li>
+  </ul>
+
+  <h3>Refrigerantes - 2 litros</h3>
+  <ul>
+    <li>Coca cola normal <button onclick="marcarFalta('Coca cola normal 2L')">Em falta</button></li>
+    <li>Coca cola zero <button onclick="marcarFalta('Coca cola zero 2L')">Em falta</button></li>
+    <li>Coca cola normal retornável <button onclick="marcarFalta('Coca cola normal retornável 2L')">Em falta</button></li>
+    <li>Coca cola zero retornável <button onclick="marcarFalta('Coca cola zero retornável 2L')">Em falta</button></li>
+  </ul>
+
+  <h3>Refrigerantes - 1,5 litros</h3>
+  <ul>
+    <li>Guaraná antártica <button onclick="marcarFalta('Guaraná antártica 1,5L')">Em falta</button></li>
+    <li>Pureza <button onclick="marcarFalta('Pureza 1,5L')">Em falta</button></li>
+  </ul>
+
+  <h3>Refrigerantes - 1 litro</h3>
+  <ul>
+    <li>Coca cola normal <button onclick="marcarFalta('Coca cola normal 1L')">Em falta</button></li>
+    <li>Coca cola zero <button onclick="marcarFalta('Coca cola zero 1L')">Em falta</button></li>
+    <li>Pureza <button onclick="marcarFalta('Pureza 1L')">Em falta</button></li>
+    <li>Laranjinha (pureza sabor laranja) <button onclick="marcarFalta('Laranjinha 1L')">Em falta</button></li>
+  </ul>
+
+  <h3>Refrigerantes - 600 ml</h3>
+  <ul>
+    <li>Coca cola normal <button onclick="marcarFalta('Coca cola normal 600ml')">Em falta</button></li>
+    <li>Coca cola zero <button onclick="marcarFalta('Coca cola zero 600ml')">Em falta</button></li>
+    <li>Power ade (isotônico) <button onclick="marcarFalta('Power ade 600ml')">Em falta</button></li>
+    <li>Sprite <button onclick="marcarFalta('Sprite 600ml')">Em falta</button></li>
+    <li>Lemon fresh <button onclick="marcarFalta('Lemon fresh 600ml')">Em falta</button></li>
+    <li>Fanta laranja <button onclick="marcarFalta('Fanta laranja 600ml')">Em falta</button></li>
+    <li>Ice tea (chá gelado) <button onclick="marcarFalta('Ice tea 600ml')">Em falta</button></li>
+    <li>Pureza <button onclick="marcarFalta('Pureza 600ml')">Em falta</button></li>
+    <li>Guaraná antártica <button onclick="marcarFalta('Guaraná antártica 600ml')">Em falta</button></li>
+  </ul>
+
+  <h3>Águas</h3>
+  <ul>
+    <li>Água com gás <button onclick="marcarFalta('Água com gás')">Em falta</button></li>
+    <li>Água sem gás <button onclick="marcarFalta('Água sem gás')">Em falta</button></li>
+    <li>Água de coco <button onclick="marcarFalta('Água de coco')">Em falta</button></li>
+  </ul>
+
+  <h3>Latas (350 ml)</h3>
+  <ul>
+    <li>Coca cola normal <button onclick="marcarFalta('Coca cola normal lata')">Em falta</button></li>
+    <li>Coca cola zero <button onclick="marcarFalta('Coca cola zero lata')">Em falta</button></li>
+    <li>Sprite normal <button onclick="marcarFalta('Sprite normal lata')">Em falta</button></li>
+    <li>Sprite zero <button onclick="marcarFalta('Sprite zero lata')">Em falta</button></li>
+    <li>Fanta laranja <button onclick="marcarFalta('Fanta laranja lata')">Em falta</button></li>
+    <li>Fanta uva <button onclick="marcarFalta('Fanta uva lata')">Em falta</button></li>
+    <li>Pureza normal <button onclick="marcarFalta('Pureza normal lata')">Em falta</button></li>
+    <li>Pureza zero <button onclick="marcarFalta('Pureza zero lata')">Em falta</button></li>
+    <li>Guaraná antártica normal <button onclick="marcarFalta('Guaraná antártica normal lata')">Em falta</button></li>
+    <li>Guaraná antártica zero <button onclick="marcarFalta('Guaraná antártica zero lata')">Em falta</button></li>
+    <li>Schweppes citrus <button onclick="marcarFalta('Schweppes citrus lata')">Em falta</button></li>
+    <li>Schweppes citrus zero <button onclick="marcarFalta('Schweppes citrus zero lata')">Em falta</button></li>
+    <li>Tônica normal <button onclick="marcarFalta('Tônica normal lata')">Em falta</button></li>
+    <li>Tônica zero <button onclick="marcarFalta('Tônica zero lata')">Em falta</button></li>
+  </ul>
+
+  <h3>Del Valle</h3>
+  <ul>
+    <li>Uva <button onclick="marcarFalta('Del Valle Uva')">Em falta</button></li>
+    <li>Manga <button onclick="marcarFalta('Del Valle Manga')">Em falta</button></li>
+    <li>Goiaba <button onclick="marcarFalta('Del Valle Goiaba')">Em falta</button></li>
+    <li>Pêssego <button onclick="marcarFalta('Del Valle Pêssego')">Em falta</button></li>
+    <li>Maracujá <button onclick="marcarFalta('Del Valle Maracujá')">Em falta</button></li>
+  </ul>
+<h3>Destilados</h3>
+<ul>
+    <li>Vodka <button onclick="marcarFalta('vodka')">Em falta</button></li>
+     <li>Rum <button onclick="marcarFalta('rum')">Em falta</button></li>
+      <li>Cachaça <button onclick="marcarFalta('Cachaça')">Em falta</button></li>
+       <li>Aperol <button onclick="marcarFalta('Aperol')">Em falta</button></li>
+        <li>Whiskey <button onclick="marcarFalta('whiskey')">Em falta</button></li>
+         <li>Gin <button onclick="marcarFalta('gin')">Em falta</button></li>
+          <li>Martini <button onclick="marcarFalta('martini')">Em falta</button></li>
+</ul>
+  <h3>Cervejas</h3>
+  <ul>
+    <li>Original 600ml <button onclick="marcarFalta('Original 600ml')">Em falta</button></li>
+    <li>Stella Artois 600ml <button onclick="marcarFalta('Stella Artois 600ml')">Em falta</button></li>
+    <li>Heineken longneck <button onclick="marcarFalta('Heineken longneck')">Em falta</button></li>
+    <li>Heineken zero longneck <button onclick="marcarFalta('Heineken zero longneck')">Em falta</button></li>
+    <li>Original longneck <button onclick="marcarFalta('Original longneck')">Em falta</button></li>
+    <li>Brahma lata <button onclick="marcarFalta('Brahma lata')">Em falta</button></li>
+    <li>Brahma zero lata <button onclick="marcarFalta('Brahma zero lata')">Em falta</button></li>
+    </ul>
+    <div class="add-form">
+      <input type="text" id="novoBebidas" placeholder="Novo produto">
+      <button onclick="adicionarProduto('Bebidas')">Adicionar</button>
+    </div>
+
+
+  <div id="faltas">
+    <h2>Produtos em falta</h2>
+    <ul id="listaFaltas"></ul>
+    <button onclick="enviarWhatsApp()">Enviar WhatsApp</button>
+    <button onclick="enviarEmail()">Enviar Email</button>
+  </div>
+
+   <script>
+    const listaFaltas = document.getElementById('listaFaltas');
+    let faltando = [];
+    const usuario = prompt("Digite seu nome:");
+
+    function abrirAba(abaId) {
+      document.querySelectorAll('.tab-content').forEach(div => {
+        div.classList.remove('active');
+      });
+      document.getElementById(abaId).classList.add('active');
+    }
+
+    function marcarFalta(produto) {
+      if (!faltando.includes(produto)) {
+        faltando.push(produto);
+        renderLista();
+      }
+    }
+
+    function removerFalta(produto) {
+      faltando = faltando.filter(p => p !== produto);
+      renderLista();
+    }
+
+    function renderLista() {
+      listaFaltas.innerHTML = "";
+      faltando.forEach(produto => {
+        const item = document.createElement('li');
+        item.classList.add('faltando');
+
+        const texto = document.createElement('span');
+        texto.textContent = produto;
+
+        const btnRemover = document.createElement('button');
+        btnRemover.textContent = "❌";
+        btnRemover.classList.add("remover");
+        btnRemover.onclick = () => removerFalta(produto);
+
+        item.appendChild(texto);
+        item.appendChild(btnRemover);
+        listaFaltas.appendChild(item);
+      });
+    }
+
+    function adicionarProduto(aba) {
+      const input = document.getElementById("novo" + aba);
+      const produto = input.value.trim();
+      if (produto) {
+        const ul = document.getElementById("produtos" + aba);
+        const li = document.createElement("li");
+        li.innerHTML = `${produto} <button onclick="marcarFalta('${produto}')">Em falta</button>`;
+        ul.appendChild(li);
+        input.value = "";
+      }
+    }
+
+    function enviarWhatsApp() {
+      const numero = "5599999"; // informe aqui seu número
+      const mensagem = encodeURIComponent(
+        "Lista feita por " + usuario + 
+        "\nProdutos em falta:\n- " + faltando.join("\n- ")
+      );
+      const url = `https://wa.me/${numero}?text=${mensagem}`;
+      window.open(url, "_blank");
+    }
+
+    function enviarEmail() {
+      const assunto = encodeURIComponent("Produtos em falta");
+      const corpo = encodeURIComponent(
+        "Lista feita por " + usuario + 
+        "\nProdutos em falta: " + faltando.join(", ")
+      );
+      const email = "maaaaaa@gmail"; //informe aqui seu email
+      const url = `mailto:${email}?subject=${assunto}&body=${corpo}`;
+      window.location.href = url;
+    }
+  </script>
+</body>
+</html>
